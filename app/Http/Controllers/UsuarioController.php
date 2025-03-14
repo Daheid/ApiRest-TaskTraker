@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 
 class UsuarioController extends Controller
@@ -19,7 +21,8 @@ class UsuarioController extends Controller
      */
     public function create()
     {
-        //
+
+        return response()->json(["mensaje" => 'hola'], 200);
     }
 
     /**
@@ -27,7 +30,16 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $usuario = User::create([
+                'name' => $request->name,
+                'password' => $request->password
+            ]);
+
+            return response()->json(['Status' => 'Usuario Creado', 'Datos creados' => $usuario], 200);
+        } catch (Exception $e) {
+            return response()->json($e, 400);
+        };
     }
 
     /**
