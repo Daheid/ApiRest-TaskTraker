@@ -24,7 +24,7 @@ class UsuarioResquest extends FormRequest
     public function rules(): array
     {
         return [
-            "name" => "required|string|max:255|uniqued",
+            "name" => "required|string|max:255|unique:users",
             "password" => "required|string|max:255|min:8"
         ];
     }
