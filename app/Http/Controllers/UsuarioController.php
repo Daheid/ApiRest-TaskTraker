@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UsuarioResquest;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
@@ -28,15 +29,21 @@ class UsuarioController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(UsuarioResquest $request)
     {
         try {
-            $usuario = User::create([
-                'name' => $request->name,
-                'password' => $request->password
-            ]);
 
-            return response()->json(['Status' => 'Usuario Creado', 'Datos creados' => $usuario], 200);
+            $validatedData = $request->validated();
+
+            // Crear un nuevo usuario con los datos validados
+            $user = User::create($validatedData);
+
+            // $usuario = User::create([
+            //     'name' => $request->name,
+            //     'password' => $request->password
+            // ]);
+
+            return response()->json(['Status' => 'Usuario Creado', 'Datos creados' => $user], 200);
         } catch (Exception $e) {
             return response()->json($e, 400);
         };
