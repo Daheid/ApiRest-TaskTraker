@@ -43,7 +43,11 @@ class UsuarioController extends Controller
             //     'password' => $request->password
             // ]);
 
-            return response()->json(['Status' => 'Usuario Creado', 'Datos creados' => $user], 200);
+            return response()->json([
+                'Status' => 'Usuario Creado',
+                'Datos creados' => $user,
+                'token' => $user->createToken("TOken Name")->plainTextToken
+            ], 200);
         } catch (Exception $e) {
             return response()->json($e, 400);
         };
